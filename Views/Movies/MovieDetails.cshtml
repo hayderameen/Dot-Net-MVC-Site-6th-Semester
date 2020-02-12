@@ -1,0 +1,248 @@
+﻿@model SocialMediaDB.Models.MovieDisplay
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    ViewBag.Title = "Movie Details";
+}
+
+<style>   
+    .parallax {
+            /* The image used */
+            background-image: url(@Html.DisplayFor(model => model.movieInfo.backdrop_path));
+            /* Set a specific height */
+            min-height: 100vh;
+            /* Create the parallax scrolling effect */
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: relative;
+    }
+
+    .movieInfo {
+            height: 100vh;
+    }
+
+    .tagline {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 100%;
+            text-align: center;
+            color: #000;
+    }
+
+    .tagline span.border {
+            background-color: #111;
+            color: #fff;
+            padding: 18px;
+            font-size: 25px;
+            letter-spacing: 10px;
+    }
+
+    .movieInfoMeta {
+            padding-top: 15px;
+    }
+
+    .movieInfoDesc {
+            background-color: #1c2329;
+            padding: 30px;
+    }
+
+    .movieInfoDesc p { color: #adb7bd; font-family: 'Lucida Sans', Arial, sans-serif; font-size: 16px; line-height: 26px; text-indent: 30px; margin: 0; }
+
+    .releaseDate { background: #fe921f; color: #ffffff; display: inline-block; font-family: 'Lato', sans-serif; font-size: 12px; font-weight: bold; line-height: 12px; letter-spacing: 1px; margin: 0 0 30px; padding: 10px 15px 8px; text-transform: uppercase; }
+
+    .genre { color: #f2f2f2; background: #ff4a4a; font-size: 50px; line-height: 74px; font-weight: 700; margin: 0 5px 24px; float: left; padding: 10px; margin: 0 5px 24px; font-family: 'Libre Baskerville', serif; }
+
+    .genreMeta {
+            padding-top: 15px;
+    }
+
+    .cast {
+            padding-top: 30px;
+    }
+
+    .reviews {
+            padding-top: 20px;
+    }
+
+    div {
+            display: block;
+    }
+
+    body {
+            padding-top: 70px;
+    }
+
+   h1 { 
+            font-family: 'Raleway',sans-serif; 
+            font-size: 120px; 
+            font-weight: 800; 
+            line-height: 92px; 
+            margin: 0 0 24px; 
+            text-align: center; 
+            text-transform: uppercase; 
+            margin-top: 10px;
+    }
+
+    blockquote {
+          background: #f9f9f9;
+          border-left: 10px solid #ccc;
+          margin: 1.5em 10px;
+          padding: 0.5em 10px;
+          quotes: "\201C""\201D""\2018""\2019";
+    }
+
+    blockquote:before {
+          color: #ccc;
+          content: open-quote;
+          font-size: 4em;
+          line-height: 0.1em;
+          margin-right: 0.25em;
+          vertical-align: -0.4em;
+    }
+
+    blockquote p {
+        display: inline;
+    }
+</style>
+
+<div class="movieInfo">
+    
+    <h1 id="title">@Html.DisplayFor(model => model.movieInfo.title)</h1>
+
+    <!-- The display for movie info -->
+    <div class="row movieInfoMeta">
+        <div class="col-md-2"></div>
+        <div class="col-md-2">
+            <img class="img-rounded" id="poster" src="@Html.DisplayFor(model => model.movieInfo.poster_path)" width="250" />
+        </div>
+        <div class="col-md-1"></div>
+        <div class="col-md-4">
+            <div class="row">
+                <div class="col-md-12  movieInfoDesc">
+                    <div class="releaseDate">
+                        Released: @Html.DisplayFor(model => model.movieInfo.release_date)
+                    </div>
+                    <p>@Html.DisplayFor(model => model.movieInfo.overview)</p>
+                </div>
+            </div> 
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="genre" style="background:#111111; font-size: 20px; font-size: 20px; margin-top: 10px; line-height: 24px;">
+                        Runtime:
+                    </div>
+                    <div class="genre" style="background:#111111; font-size: 20px; font-size: 20px; margin-top: 10px; line-height: 24px;">
+                        @Html.DisplayFor(model => model.movieInfo.runtime) mins
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="genre" style="background:#126bbf; font-size: 20px; font-size: 20px; margin-top: 10px; float:right; line-height: 24px;">
+                                @Html.DisplayFor(model => model.movieInfo.vote_average)
+                            </div>
+                            <div class="genre" style="background:#126bbf; font-size: 20px; font-size: 20px; margin-top: 10px; float:right; line-height: 24px;">
+                                Rating:
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>        
+        </div> 
+              
+    </div>
+
+    <div class="row genreMeta">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <div class="genre">
+                Genre: 
+            </div>
+            <div class="genre">
+                @Html.DisplayFor(model => model.movieInfo.genre)
+            </div>
+            <br /><br /><br /><br /><br /><br />
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="genre" style="background:#111111; font-size: 20px; font-size: 20px; margin-top: 10px; line-height: 24px;">
+                        Budget:
+                    </div>
+                    <div class="genre" style="background:#111111; font-size: 20px; font-size: 20px; margin-top: 10px; line-height: 24px;">
+                       $ @Html.DisplayFor(model => model.movieInfo.budget)
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="genre" style="background:#126bbf; font-size: 20px; font-size: 20px; margin-top: 10px; float:right; line-height: 24px;">
+                               $ @Html.DisplayFor(model => model.movieInfo.revenue)
+                            </div>
+                            <div class="genre" style="background:#126bbf; font-size: 20px; font-size: 20px; margin-top: 10px; float:right; line-height: 24px;">
+                                Revenue:
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    
+</div>
+
+<div class="parallax">
+    <div class="tagline">
+        <span class="border">@Html.DisplayFor(model => model.movieInfo.tagline)</span>
+    </div>
+</div>
+
+<div class="cast">
+    <h1 style="font-size: 40px" id="title">Cast of @Html.DisplayFor(model => model.movieInfo.title)</h1>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-6">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Cast</th>
+                        <th>Name</th>
+                        <th>Role</th>
+                    </tr>
+                </thead>
+                <tbody>
+                     @foreach (var item in Model.cast) { 
+                    <tr>
+                        <td><img class="img-rounded" src="@Html.DisplayFor(modelItem => item.profile_path)" width="50" /></td>
+                        <td>@Html.DisplayFor(modelItem => item.name)</td>
+                        <td>@Html.DisplayFor(modelItem => item.character)</td>
+                    </tr>
+                     } 
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+</div>
+
+<div class="reviews">
+    <h1 style="font-size: 40px" id="title">Experts on @Html.DisplayFor(model => model.movieInfo.title)</h1>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            @foreach (var item in Model.reviews)
+            {
+                <h3>@Html.DisplayFor(modelItem => item.author) says:</h3>
+                <blockquote>
+                    <p>
+                        @Html.DisplayFor(modelItem => item.reviewContent)
+                    </p>
+                </blockquote>
+            }
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+</div>
+
+

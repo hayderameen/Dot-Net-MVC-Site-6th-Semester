@@ -1,0 +1,35 @@
+﻿@model IEnumerable<SocialMediaDB.Models.NameApprox>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+
+<h2>Possible Matches</h2>
+
+
+<p>
+    Note: Do not select TV Shows becaue it only shows movies!
+</p>
+<table class="table">
+    <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Add this Movie in DB</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.title)</td>
+            <td>@Html.DisplayFor(modelItem => item.description)</td>
+            <td>@Html.ActionLink("Add", "MovieDetails", new { imdb = item.imdbid })</td>
+        </tr>
+    }
+
+</table>

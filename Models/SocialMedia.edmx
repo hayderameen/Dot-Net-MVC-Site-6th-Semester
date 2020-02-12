@@ -1,0 +1,263 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SocialMediaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Cast">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="character" Type="varchar(max)" />
+          <Property Name="name" Type="varchar(max)" />
+          <Property Name="profile_path" Type="varchar(max)" />
+          <Property Name="MovieID" Type="int" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MovieDetails">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="backdrop_path" Type="varchar" MaxLength="200" />
+          <Property Name="genre" Type="varchar(max)" />
+          <Property Name="budget" Type="int" />
+          <Property Name="overview" Type="varchar(max)" />
+          <Property Name="poster_path" Type="varchar(max)" />
+          <Property Name="release_date" Type="varchar(max)" />
+          <Property Name="revenue" Type="int" />
+          <Property Name="tagline" Type="varchar(max)" />
+          <Property Name="title" Type="varchar(max)" />
+          <Property Name="vote_average" Type="float" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="runtime" Type="int" />
+        </EntityType>
+        <EntityType Name="Reviews">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="MovieID" Type="int" />
+          <Property Name="author" Type="varchar(max)" />
+          <Property Name="reviewContent" Type="varchar(max)" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK_Cast_MovieDetails">
+          <End Role="MovieDetails" Type="Self.MovieDetails" Multiplicity="0..1" />
+          <End Role="Cast" Type="Self.Cast" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MovieDetails">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Cast">
+              <PropertyRef Name="MovieID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reviews_MovieDetails">
+          <End Role="MovieDetails" Type="Self.MovieDetails" Multiplicity="0..1" />
+          <End Role="Reviews" Type="Self.Reviews" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MovieDetails">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Reviews">
+              <PropertyRef Name="MovieID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SocialMediaModelStoreContainer">
+          <EntitySet Name="Cast" EntityType="Self.Cast" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MovieDetails" EntityType="Self.MovieDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reviews" EntityType="Self.Reviews" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Cast_MovieDetails" Association="Self.FK_Cast_MovieDetails">
+            <End Role="MovieDetails" EntitySet="MovieDetails" />
+            <End Role="Cast" EntitySet="Cast" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reviews_MovieDetails" Association="Self.FK_Reviews_MovieDetails">
+            <End Role="MovieDetails" EntitySet="MovieDetails" />
+            <End Role="Reviews" EntitySet="Reviews" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SocialMediaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="MovieDetail">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="backdrop_path" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="genre" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="budget" Type="Int32" />
+          <Property Name="overview" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="poster_path" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="release_date" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="revenue" Type="Int32" />
+          <Property Name="tagline" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="title" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="vote_average" Type="Double" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Casts" Relationship="Self.FK_Cast_MovieDetails" FromRole="MovieDetails" ToRole="Cast" />
+          <NavigationProperty Name="Reviews" Relationship="Self.FK_Reviews_MovieDetails" FromRole="MovieDetails" ToRole="Reviews" />
+          <Property Name="runtime" Type="Int32" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Cast">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="character" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="profile_path" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="MovieID" Type="Int32" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="MovieDetail" Relationship="Self.FK_Cast_MovieDetails" FromRole="Cast" ToRole="MovieDetails" />
+        </EntityType>
+        <EntityType Name="Review">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="MovieID" Type="Int32" />
+          <Property Name="author" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="reviewContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="MovieDetail" Relationship="Self.FK_Reviews_MovieDetails" FromRole="Reviews" ToRole="MovieDetails" />
+        </EntityType>
+        <Association Name="FK_Cast_MovieDetails">
+          <End Role="MovieDetails" Type="Self.MovieDetail" Multiplicity="0..1" />
+          <End Role="Cast" Type="Self.Cast" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MovieDetails">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Cast">
+              <PropertyRef Name="MovieID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reviews_MovieDetails">
+          <End Role="MovieDetails" Type="Self.MovieDetail" Multiplicity="0..1" />
+          <End Role="Reviews" Type="Self.Review" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MovieDetails">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Reviews">
+              <PropertyRef Name="MovieID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SocialMediaEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="MovieDetails" EntityType="Self.MovieDetail" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="Casts" EntityType="Self.Cast" />
+          <EntitySet Name="Reviews" EntityType="Self.Review" />
+          <AssociationSet Name="FK_Cast_MovieDetails" Association="Self.FK_Cast_MovieDetails">
+            <End Role="MovieDetails" EntitySet="MovieDetails" />
+            <End Role="Cast" EntitySet="Casts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reviews_MovieDetails" Association="Self.FK_Reviews_MovieDetails">
+            <End Role="MovieDetails" EntitySet="MovieDetails" />
+            <End Role="Reviews" EntitySet="Reviews" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SocialMediaModelStoreContainer" CdmEntityContainer="SocialMediaEntities1">
+          <EntitySetMapping Name="MovieDetails">
+            <EntityTypeMapping TypeName="SocialMediaModel.MovieDetail">
+              <MappingFragment StoreEntitySet="MovieDetails">
+                <ScalarProperty Name="runtime" ColumnName="runtime" />
+                <ScalarProperty Name="backdrop_path" ColumnName="backdrop_path" />
+                <ScalarProperty Name="genre" ColumnName="genre" />
+                <ScalarProperty Name="budget" ColumnName="budget" />
+                <ScalarProperty Name="overview" ColumnName="overview" />
+                <ScalarProperty Name="poster_path" ColumnName="poster_path" />
+                <ScalarProperty Name="release_date" ColumnName="release_date" />
+                <ScalarProperty Name="revenue" ColumnName="revenue" />
+                <ScalarProperty Name="tagline" ColumnName="tagline" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="vote_average" ColumnName="vote_average" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="SocialMediaModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Casts">
+            <EntityTypeMapping TypeName="SocialMediaModel.Cast">
+              <MappingFragment StoreEntitySet="Cast">
+                <ScalarProperty Name="character" ColumnName="character" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="profile_path" ColumnName="profile_path" />
+                <ScalarProperty Name="MovieID" ColumnName="MovieID" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reviews">
+            <EntityTypeMapping TypeName="SocialMediaModel.Review">
+              <MappingFragment StoreEntitySet="Reviews">
+                <ScalarProperty Name="MovieID" ColumnName="MovieID" />
+                <ScalarProperty Name="author" ColumnName="author" />
+                <ScalarProperty Name="reviewContent" ColumnName="reviewContent" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
